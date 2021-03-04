@@ -20,7 +20,7 @@
                  <a href="{{route('movies.index')}}" class="hover:text-gray-300 mt-3 md:mt-0">Movies</a>
              </li>
              <li class="ml-6">
-                 <a href="#" class="hover:text-gray-300 mt-3 md:mt-0">TV shows</a>
+                 <a href="{{route('tv.index')}}" class="hover:text-gray-300 mt-3 md:mt-0">TV shows</a>
              </li>
              <li class="ml-6">
                  <a href="{{route('actors.index')}}" class="hover:text-gray-300 mt-3 md:mt-0">Actors</a>
@@ -41,7 +41,7 @@
              <a href="{{route('movies.index')}}" class="my-3 block text-gray-300 hover:text-gray-100 text-sm font-medium duration-700">
                  Movies
              </a>
-             <a href="#" class="my-3 block text-gray-300 hover:text-gray-100 text-sm font-medium duration-700">
+             <a href="{{route('tv.index')}}" class="my-3 block text-gray-300 hover:text-gray-100 text-sm font-medium duration-700">
                  Tv Shows
              </a>
              <a href="{{route('actors.index')}}" class="my-3 block text-gray-300 hover:text-gray-100 text-sm font-medium duration-700">
