@@ -1,0 +1,71 @@
+@extends('layouts.main')
+
+@section('content')
+    <div class="container mx-auto px-4 pt-16">
+        <div class="popular-movies">
+            <h2 class="uppercase tracking-wider text-yellow-500 text-lg font-semibold">Popular Movies</h2>
+{{--            <div class="filter ml-0">--}}
+{{--                <select class="appearance-none bg-gray-400 font-semibold flex items-center">--}}
+{{--                    <option>Newest</option>--}}
+{{--                    <option>Most Popular</option>--}}
+{{--                    <option>Recommended</option>--}}
+{{--                </select>--}}
+{{--            </div>--}}
+            <div class="grid grid-cols-5 gap-8">
+                @foreach($popularMovies as $Movie)
+                    <div>
+                        <div class="mt-8">
+                            <a href="{{ route('movies.show', $Movie['id'])}}">
+                                <img src="{{'https://image.tmdb.org/t/p/w500/'.$Movie['poster_path']}}" alt="Img" class="hover:opacity-75 transition ease-in-out duration-150">
+                            </a>
+                            <div class="mt-2">
+                                <a href="{{ route('movies.show', $Movie['id'])}}" class="text-lg mt-2 hover:text-gray-300">{{$Movie['title']}}</a>
+                                <div class="flex items-center text-gray-400 text-sm mt-1">
+                                    <span><i class="uil uil-star text-yellow-500"></i></span>
+                                    <span class="ml-1">{{$Movie['vote_average']}}</span>
+                                    <span class="mx-1">|</span>
+                                    <span>{{\Carbon\Carbon::parse($Movie['release_date'])->format('M d, Y')}}</span>
+                                </div>
+                                <div class="text-gray-400 text-sm">
+                                    @foreach($Movie['genre_ids'] as $genre)
+                                        {{$genres->get($genre) }}@if (!$loop->last), @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <div class="container mx-auto px-4 pt-16">
+        <div class="new-movies">
+            <h2 class="uppercase tracking-wider text-yellow-500 text-lg font-semibold">New Movies</h2>
+            <div class="grid grid-cols-5 gap-8">
+                @foreach($nowPlayingMovies as $Movie)
+                    <div>
+                        <div class="mt-8">
+                            <a href="{{ route('movies.show', $Movie['id'])}}">
+                                <img src="{{'https://image.tmdb.org/t/p/w500/'.$Movie['poster_path']}}" alt="Img" class="hover:opacity-75 transition ease-in-out duration-150">
+                            </a>
+                            <div class="mt-2">
+                                <a href="{{ route('movies.show', $Movie['id'])}}" class="text-lg mt-2 hover:text-gray-300">{{$Movie['title']}}</a>
+                                <div class="flex items-center text-gray-400 text-sm mt-1">
+                                    <span>Rating</span>
+                                    <span class="ml-1">{{$Movie['vote_average']}}</span>
+                                    <span class="mx-1">|</span>
+                                    <span>{{\Carbon\Carbon::parse($Movie['release_date'])->format('M d, Y')}}</span>
+                                </div>
+                                <div class="text-gray-400 text-sm">
+                                    @foreach($Movie['genre_ids'] as $genre)
+                                        {{$genres->get($genre) }}@if (!$loop->last), @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                @endforeach
+            </div>
+        </div>
+@endsection
