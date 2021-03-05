@@ -1,6 +1,5 @@
 <div class="relative mt-3 md:mt-0">
     <input wire:model.debounce.500ms="search" type="text" class="bg-gray-800 rounded-full w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-outline" placeholder="Search">
-    <div wire:loading class="spinner top-0 right-0 mr-4 mt-3"></div>
     @if(strlen($search) > 2)
         <div class="absolute bg-gray-800 rounded text-sm w-64 mt-4">
             @if(count($searchResults) > 0)

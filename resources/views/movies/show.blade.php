@@ -7,7 +7,7 @@
             <div class="ml-24">
                 <h2 class="text-4xl font-semibold">{{ $Movie['title'] }}</h2>
                 <div class="flex items-center text-gray-400 text-sm mt-1">
-                    <span>Rating</span>
+                    <span><i class="uil uil-star text-yellow-500"></i></span>
                     <span class="ml-1">{{$Movie['vote_average']}}</span>
                     <span class="mx-1">|</span>
                     <span>{{\Carbon\Carbon::parse($Movie['release_date'])->format('M d, Y')}}</span>
@@ -37,9 +37,36 @@
                 </div>
                 @if (count($Movie['videos']['results']) > 0)
                     <div class="mt-12">
-                        <a href="https://youtube.com/watch?v={{ $Movie['videos']['results'][0]['key']}}" class="flex inline-flex items-center bg-yellow-500 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-yellow-600 transition ease-in-out duration-150">
-                            <span class="ml-2"><i class="uil uil-play-circle text-gray-900 mr-2 "></i>Play Trailer</span>
-                        </a>
+                        <button class="modal-open flex inline-flex items-center bg-yellow-500 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-yellow-600 transition ease-in-out duration-150"><i class="uil uil-play-circle text-gray-900 mr-2 "></i>Play Trailer</button>
+                        <div class="modal opacity-0 pointer-events-none fixed w-500 h-650 top-0 left-0 flex items-center justify-center">
+                            <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+                            <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+                                <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+                                    <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                                    </svg>
+
+                                </div>
+                                <iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/{{ $Movie['videos']['results'][0]['key']}}?autoplay=1&origin=http://movie-app.test" frameborder="0"></iframe>
+                                <div class="modal-content py-4 text-left px-6">
+                                    <div class="flex justify-between items-center pb-3">
+                                        <div class="modal-close cursor-pointer z-50">
+                                            <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                                                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-5 gap-8">
+                            <a href="{{'https://www.pathe.nl/films/actueel'}}">
+                                <img src="{{'https://seeklogo.com/images/P/Pathe_-logo-FBC662CE19-seeklogo.com.png'}}" alt="Img" class="hover:opacity-75 transition ease-in-out duration-150 py-10 gap-8">
+                            </a>
+                            <a href="{{'https://www.vuecinemas.nl/films/nu-in-de-bioscoop#filmposters'}}">
+                                <img src="{{'https://www.vuecinemas.nl/img/logo.png'}}" alt="Img" class="hover:opacity-75 transition ease-in-out duration-150 py-12 gap-8">
+                            </a>
+                        </div>
                     </div>
                 @endif
             </div>
@@ -87,4 +114,51 @@
             </div>
         </div>
     </div>
+    <script>
+        var openmodal = document.querySelectorAll('.modal-open')
+        for (var i = 0; i < openmodal.length; i++) {
+            openmodal[i].addEventListener('click', function(event){
+                event.preventDefault()
+                toggleModal()
+            })
+        }
+
+        const overlay = document.querySelector('.modal-overlay')
+        overlay.addEventListener('click', toggleModal)
+
+        var closemodal = document.querySelectorAll('.modal-close')
+        for (var i = 0; i < closemodal.length; i++) {
+            closemodal[i].addEventListener('click', toggleModal)
+        }
+
+        document.onkeydown = function(evt) {
+            evt = evt || window.event
+            var isEscape = false
+            if ("key" in evt) {
+                isEscape = (evt.key === "Escape" || evt.key === "Esc")
+            } else {
+                isEscape = (evt.keyCode === 27)
+            }
+            if (isEscape && document.body.classList.contains('modal-active')) {
+                toggleModal()
+            }
+        };
+
+
+        function toggleModal () {
+            const body = document.querySelector('body')
+            const modal = document.querySelector('.modal')
+            modal.classList.toggle('opacity-0')
+            modal.classList.toggle('pointer-events-none')
+            body.classList.toggle('modal-active')
+        }
+
+        function injectStyles(styleTag){
+            const iframe = document.getElementById("my-frame");
+            const embed = iframe.contentDocument;
+            embed.head.appendChild(styleTag);
+        }
+
+
+    </script>
 @endsection

@@ -4,13 +4,6 @@
     <div class="container mx-auto px-4 pt-16">
         <div class="popular-movies">
             <h2 class="uppercase tracking-wider text-yellow-500 text-lg font-semibold">Popular Movies</h2>
-{{--            <div class="filter ml-0">--}}
-{{--                <select class="appearance-none bg-gray-400 font-semibold flex items-center">--}}
-{{--                    <option>Newest</option>--}}
-{{--                    <option>Most Popular</option>--}}
-{{--                    <option>Recommended</option>--}}
-{{--                </select>--}}
-{{--            </div>--}}
             <div class="grid grid-cols-5 gap-8">
                 @foreach($popularMovies as $Movie)
                     <div>
@@ -64,7 +57,6 @@
                             </div>
                         </div>
                     </div>
-
                 @endforeach
             </div>
         </div>
